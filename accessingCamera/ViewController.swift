@@ -8,13 +8,38 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+    var imagePicker = UIImagePickerController()
+    
+    @IBOutlet weak var newImage: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        imagePicker.delegate = self
     }
 
-
+    @IBAction func takeSelfieTapped(_ sender: Any) {
+        imagePicker.sourceType = .camera
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    @IBAction func libraryTapped(_ sender: Any) {
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+    }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any])
+        {
+            
+            
+            if let selectedImage =
+        info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+        {newImage.image = selectedImage}
+        imagePicker.dismiss(animated: true, completion: nil)
+        
+    }
 }
+
+
+
 
